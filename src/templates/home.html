@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block head_title %}Welcome | {{ block.super }}{% endblock %}
+
+<style>
+{% block style %}
+.navbar-static-top {
+	margin-bottom: 0px !important;
+}
+
+.jumbotron {
+	background-color:#0E3D14;
+	color: #FFF;
+
+	{% if featured.background_image %}
+	background-image:url("{{featured.image.url}}");
+	background-position: -100px;
+	background-repeat: no-repeat;
+	background-color:#000;
+	
+ 
+
+
+
+	{% endif %}
+
+
+}
+
+{% endblock %}
+</style>
+
+
+     
+{% block jumbotron %}
+ {% if featured %}
+<div class="jumbotron">
+ <div class="container">
+	<div class="row">
+		<div class='col-sm-6'>
+		<h1>{{featured.product.title}}</h1>
+		<h3 color="#000000">{{featured.product.description}}</h3>
+
+		<a class="btn btn-lg btn-primary" href="{% url 'product_detail_function' pk=featured.product.pk %} " role="button">More Details</a>
+		</div>
+
+		<div class='col-sm-6' >
+
+ 		</div>
+		</div>
+	</div>
+ </div>
+ {% endif %}
+{% endblock %}
+
+
+
+
+{% block content %}
+{% include "products/products.html" with object_list=products %}
+<!-- {% if request.user.is_authenticated %}
+<h1>You are logged in!</h1>
+
+
+	{% if queryset %}
+	<h2>Welcome Staff</h2>
+	<table class='table'>
+	{% for instance in queryset %}
+		<tr><td>{{ forloop.counter }}</td><td>{{ instance.email }}</td><td>{{ instance.full_name }}</td><td>{{ instance.timestamp|timesince }} ago</td></tr>
+		{% if instance.email == "abc@gmail.edu" %}
+		<tr><td>is equal</td></tr>
+		{% endif %}
+	{% endfor %}
+	</table>
+
+	{% endif %}-->
+
+{% endif %}
+{% endblock %}

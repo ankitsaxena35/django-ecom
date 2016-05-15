@@ -1,0 +1,12 @@
+<h3> Recommended Products</h3>
+
+{% for object in object_list %}
+<div class="row">
+  <div class="col-xs-3">
+    <a href="{% url 'product_detail_function' pk=object.pk %}" class="thumbnail">{{ object }}
+      <img class='img-responsive' src="{{ object.get_image_url }}" alt=".....">
+    </a>
+</div>
+{% cycle '' '' '<div></div class="row">' %}
+{% endfor %}
+</div>

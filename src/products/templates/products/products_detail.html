@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+<script type="text/javascript">
+{% block jquery %}
+var pro_price= $(".variation_select option:selected").attr("data-price")
+
+$("#price").text(pro_price);
+
+$(".variation_select").change(function(){
+	var pro_price= $(".variation_select option:selected").attr("data-price")
+	$("#price").html(pro_price);
+	var sale_price= $(".variation_select option:selected").attr("data-saleprice")
+	$("#price").html(sale_price);
+
+
+
+
+
+});
+
+{% endblock %}
+</script>
+
+
+{% block content %}
+
+<div class='row'>
+<div class='col-sm-8'>
+<h2>{{ object.title }}</h2>
+</div>
+<div class='col-sm-8'>
+	{% if object.get_image_url %}
+	<img class='img-responsive' src="{{ object.get_image_url }}">
+	{%endif %}
+</div>
+
+
+<div class='col-sm-4'>
+<h3 id="price">{{ object.price }} RS</h3>
+<form action="{% url 'cart' %}" method="GET" >
+{% if object.variations_set.all.count > 1 %}
+
+  <select name="item" class ="form-control variation_select">
+  {% for v in object.variations_set.all %}
+
+  <option data-saleprice="{{v.sale_price}}" data-price="{{ v.price }}" value="{{ v.id }}">{{ v }}</option>
+
+  {% endfor %}
+  </select>
+
+{% else %}
+
+  <input type="hidden" name="item" value="{{ object.variation_set.first.id }}">
+
+{% endif %}
+<input class="form-control variation_select" type="number" name="qty" value="1">
+
+<br><input type="submit" class ="btn btn-default" value="Add To Cart">
+</form>
+<hr>
+<br>
+<br><p>Related Products</p>
+	<div class="row">
+  <div class="col-xs-6">
+  	{% for r in related %}
+    <a href="{% url 'product_detail_function' pk=r.pk %}" class="thumbnail">{{r}}
+      <img class='img-responsive' src="{{ r.get_image_url }}" alt=".....">
+    </a>
+  {% endfor %}
+  </div>
+  
+</div>
+
+</div>
+</div>
+	<p id='yo' class='lead'>
+	{% if object.description %}
+	<h3> Description</h3>
+	<h3>{{ object.description }}</h3>
+</p>
+	{% endif %}
+
+
+{% endblock %}

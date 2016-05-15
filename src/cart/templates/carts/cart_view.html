@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%block content %}
+
+<table class='table'>
+
+{% for item in object.cartitem_set.all %}
+<tr>
+<td>{{ item }}</td>
+
+<td>{{ item.quantity }}</td>
+<td><a href="{{ item.remove }}"> Remove</a></td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+
+{% endblock %}

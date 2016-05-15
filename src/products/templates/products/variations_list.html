@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{% for object in object_list %}
+<table class='table'>
+
+<td><a href="{% url 'product_detail_function' pk=object.pk %}">{{ object }} </a></td>
+</table>
+{% endfor %}
+<form action="" method="POST">
+	{% csrf_token %}
+	{{formset.management_form}}
+	{% for form in formset %}
+	{{form.instance.title}}
+
+    {{ form.as_p }}
+    {%endfor%}
+	<input type="submit" value="Submit" class="btn">
+</form>
+
+{% endblock %}

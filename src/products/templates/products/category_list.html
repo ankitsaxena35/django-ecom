@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% for object in object_list %}
+<table class='table'>
+
+<td><a href="{% url 'product_categories' slug=object.slug %}">{{ object }} </a></td>
+</table>
+{% endfor %}
+{% endblock %}
